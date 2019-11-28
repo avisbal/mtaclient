@@ -10,8 +10,8 @@ import (
 )
 
 type MTAClient struct {
-	baseURL string
-	apiKey  string
+	BaseURL string
+	ApiKey  string
 }
 
 func (m MTAClient) GetArrivalTimes(feedID constants.FeedID, stopID constants.StopID) ([]int64, error) {
@@ -39,13 +39,13 @@ func (m MTAClient) GetArrivalTimes(feedID constants.FeedID, stopID constants.Sto
 
 func (m MTAClient) getFeed(feedID constants.FeedID) (*pb.FeedMessage, error) {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", m.baseURL, nil)
+	req, err := http.NewRequest("GET", m.BaseURL, nil)
 	if err != nil {
 		return nil, err
 	}
 
 	q := req.URL.Query()
-	q.Add("key", m.apiKey)
+	q.Add("key", m.ApiKey)
 	q.Add("feed_id", feedID.String())
 	req.URL.RawQuery = q.Encode()
 
